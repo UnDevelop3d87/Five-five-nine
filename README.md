@@ -69,7 +69,7 @@ Built by a Fresno resident, for Fresno residents. 🌻
 © 2026 Fresno Resource Hub™ / Five59ineHub™. All rights reserved.
 
 The names "Fresno Resource Hub," "Five59ineHub," the acronyms
-"F.R.H.," "FRH," "5.59," the sunflower logo, all original designs,
+"F.R.H.," "FRH," "5.59," "The Hub" or something similar  in an attempt to recreate, the sunflower logo, all original designs,
 written content, and the overall web application concept and creation
 are the exclusive property of the creator. Unauthorized reproduction,
 redistribution, rebranding, or commercial use is prohibited without

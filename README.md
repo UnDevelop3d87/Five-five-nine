@@ -6,7 +6,7 @@ A free, mobile-friendly community resource directory connecting
 Fresno County residents to the help they need — food, housing, jobs,
 utility assistance, legal aid, mental health services, and more.
 
-🔗 **Live site:** https://fivefiveninehub.netlify.app
+🔗 **Live site:** https://5five9inehub.netlify.app
 
 ---
 

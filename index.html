@@ -275,6 +275,14 @@
     .btn-signin { font-size: 11px; padding: 0 8px; }
     .btn-create { font-size: 11px; padding: 0 8px; }
   }
+  /* On phones the Donate + account controls live inside the hamburger drawer,
+     leaving the sandwich menu as the clear top-right action. */
+  @media (max-width: 720px) {
+    .header-inner .btn-donate-header,
+    .header-inner #accountBtn { display: none; }
+  }
+  /* Show the sandwich menu only where it's needed (search stays available too) */
+  .menu-btn { margin-left: 2px; }
   @media (max-width: 360px) {
     .btn-donate-header { width: 34px; height: 34px; padding: 0; border-radius: 50%; font-size: 0; }
     .btn-donate-header::after { content: '💛'; font-size: 16px; }
@@ -3347,9 +3355,246 @@
     .events-grid { grid-template-columns: 1fr; }
     .scroll-top-btn { bottom:18px; right:14px; width:42px; height:42px; }
   }
+
+  /* ══════════════════════════════════
+     HAMBURGER "SANDWICH" MENU (top-right)
+  ══════════════════════════════════ */
+  .menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: rgba(255,255,255,.16);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .menu-btn:hover { background: rgba(255,255,255,.28); }
+  .menu-btn span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: #fff;
+    transition: transform .3s ease, opacity .2s ease;
+  }
+  body.drawer-open .menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  body.drawer-open .menu-btn span:nth-child(2) { opacity: 0; }
+  body.drawer-open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Slide-out navigation drawer */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,28,30,.5);
+    backdrop-filter: blur(2px);
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  .nav-overlay.open { opacity: 1; pointer-events: all; }
+
+  .nav-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(84vw, 320px);
+    background: var(--cream);
+    z-index: 201;
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -8px 0 32px rgba(0,0,0,.22);
+    overflow-y: auto;
+  }
+  .nav-drawer.open { transform: translateX(0); }
+  .nav-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px;
+    background: var(--sky);
+    color: #fff;
+    position: sticky;
+    top: 0;
+  }
+  .nav-drawer-head .nd-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-drawer-close {
+    background: rgba(255,255,255,.2);
+    border: none;
+    color: #fff;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .nav-drawer-links {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    gap: 2px;
+  }
+  .nav-drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 14px;
+    min-height: 48px;
+    border: none;
+    background: transparent;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+    transition: background .15s;
+  }
+  .nav-drawer-link:hover, .nav-drawer-link:focus { background: var(--warm); }
+  .nav-drawer-link .ndl-ico { font-size: 20px; width: 24px; text-align: center; }
+  .nav-drawer-sep { height: 1px; background: var(--border); margin: 10px 12px; }
+  .nav-drawer-cta {
+    margin: 4px 12px 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #F5A623, #e8941a);
+    color: #1C1C1E;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+
+  /* ══════════════════════════════════
+     BOTTOM TAB BAR
+  ══════════════════════════════════ */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 160;
+    display: flex;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,.08);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .bottom-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 58px;
+    padding: 8px 2px;
+    border: none;
+    background: transparent;
+    color: var(--soft);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color .2s;
+    position: relative;
+  }
+  .bottom-nav-item .bn-ico { font-size: 21px; line-height: 1; transition: transform .2s; }
+  .bottom-nav-item.active { color: var(--sky); font-weight: 700; }
+  .bottom-nav-item.active .bn-ico { transform: translateY(-1px) scale(1.08); }
+  .bottom-nav-item.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--sky);
+  }
+
+  /* Keep page content clear of the fixed bottom bar */
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  .scroll-top-btn { bottom: calc(74px + env(safe-area-inset-bottom, 0px)) !important; }
+  .install-prompt-btn { bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important; }
+
+  @media (min-width: 900px) {
+    .bottom-nav { max-width: 560px; left: 50%; transform: translateX(-50%); right: auto; border-radius: 18px 18px 0 0; border: 1px solid var(--border); border-bottom: none; }
+  }
 </style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════
+     SLIDE-OUT NAVIGATION DRAWER (hamburger menu)
+══════════════════════════════════ -->
+<div class="nav-overlay" id="navOverlay" onclick="closeNavDrawer()"></div>
+<aside class="nav-drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="nav-drawer-head">
+    <span class="nd-title">🌻 Menu</span>
+    <button class="nav-drawer-close" onclick="closeNavDrawer()" aria-label="Close menu">✕</button>
+  </div>
+  <nav class="nav-drawer-links">
+    <button class="nav-drawer-link" onclick="navTo('all','top','home')"><span class="ndl-ico">🏠</span> Home</button>
+    <button class="nav-drawer-link" onclick="navTo('all','.section-head','resources')"><span class="ndl-ico">📋</span> All Resources</button>
+    <button class="nav-drawer-link" onclick="navTo('events','#eventsSection','events')"><span class="ndl-ico">📅</span> Community Events</button>
+    <button class="nav-drawer-link" onclick="navTo('civic','#civicSection','civic')"><span class="ndl-ico">🏛️</span> Civic & Government</button>
+    <button class="nav-drawer-link" onclick="navTo('mission','#missionSection','about')"><span class="ndl-ico">🌻</span> Our Mission</button>
+    <button class="nav-drawer-link" onclick="navTo('about','#aboutSection','about')"><span class="ndl-ico">💬</span> About Us</button>
+    <div class="nav-drawer-sep"></div>
+    <button class="nav-drawer-link" onclick="closeNavDrawer(); openModal();"><span class="ndl-ico">👤</span> Sign In / Account</button>
+    <button class="nav-drawer-link" onclick="closeNavDrawer(); location.href='tel:211';"><span class="ndl-ico">📞</span> 211 — Local Help Line</button>
+  </nav>
+  <button class="nav-drawer-cta" onclick="closeNavDrawer(); openDonateModal();">💛 Support This Hub</button>
+</aside>
+
+<!-- ══════════════════════════════════
+     BOTTOM TAB BAR
+══════════════════════════════════ -->
+<nav class="bottom-nav" id="bottomNav" aria-label="Primary">
+  <button class="bottom-nav-item active" data-tab="home" onclick="navTo('all','top','home')">
+    <span class="bn-ico">🏠</span><span>Home</span>
+  </button>
+  <button class="bottom-nav-item" data-tab="resources" onclick="navTo('all','.section-head','resources')">
+    <span class="bn-ico">📋</span><span>Resources</span>
+  </button>
+  <button class="bottom-nav-item" data-tab="events" onclick="navTo('events','#eventsSection','events')">
+    <span class="bn-ico">📅</span><span>Events</span>
+  </button>
+  <button class="bottom-nav-item" data-tab="civic" onclick="navTo('civic','#civicSection','civic')">
+    <span class="bn-ico">🏛️</span><span>Civic</span>
+  </button>
+  <button class="bottom-nav-item" data-tab="about" onclick="navTo('about','#aboutSection','about')">
+    <span class="bn-ico">💬</span><span>About</span>
+  </button>
+</nav>
 
 <!-- HEADER -->
 <header>
@@ -3368,6 +3613,9 @@
     <div class="header-actions">
       <button class="btn-donate-header" onclick="openDonateModal()" title="Support Fresno Resource Hub">💛 Donate</button>
       <div id="accountBtn"></div>
+      <button class="menu-btn" id="menuBtn" onclick="toggleNavDrawer()" aria-label="Open menu" aria-expanded="false" aria-controls="navDrawer">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -4898,9 +5146,9 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════
+// ═════════��═════════════════════════════
 // DATA — Real Fresno County Organizations
-// ═══════════════════════════════════════
+// ═════════════���═════════════════════════
 const resources = [
   // FOOD
   {
@@ -7429,6 +7677,58 @@ function subscribeStrip() {
   showToast('🔔 You\'ll get weekly updates on events, giveaways, job fairs & more!');
   document.getElementById('stripEmail').value = '';
 }
+
+/* ══════════════════════════════════
+   HAMBURGER DRAWER + BOTTOM TAB BAR
+══════════════════════════════════ */
+function toggleNavDrawer() {
+  document.body.classList.contains('drawer-open') ? closeNavDrawer() : openNavDrawer();
+}
+function openNavDrawer() {
+  document.body.classList.add('drawer-open');
+  document.getElementById('navDrawer').classList.add('open');
+  document.getElementById('navOverlay').classList.add('open');
+  var mb = document.getElementById('menuBtn');
+  if (mb) mb.setAttribute('aria-expanded', 'true');
+}
+function closeNavDrawer() {
+  document.body.classList.remove('drawer-open');
+  document.getElementById('navDrawer').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  var mb = document.getElementById('menuBtn');
+  if (mb) mb.setAttribute('aria-expanded', 'false');
+}
+
+function setActiveTab(key) {
+  document.querySelectorAll('.bottom-nav-item').forEach(function (b) {
+    b.classList.toggle('active', b.getAttribute('data-tab') === key);
+  });
+}
+
+/* Switch category (reusing the page's existing setCategory) then scroll into view */
+function navTo(cat, scrollSel, activeKey) {
+  var btn = document.querySelector('.cat-btn[onclick*="\'' + cat + '\'"]');
+  if (btn) setCategory(cat, btn);
+  closeNavDrawer();
+  setActiveTab(activeKey);
+  // Wait a tick so any toggled sections are visible before measuring position
+  setTimeout(function () {
+    if (scrollSel === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    var target = document.querySelector(scrollSel);
+    if (!target) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    var headerH = (document.querySelector('header') || {}).offsetHeight || 68;
+    var y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }, 70);
+}
+
+/* Close drawer with Escape key */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && document.body.classList.contains('drawer-open')) closeNavDrawer();
+});
 </script>
 
 </body>

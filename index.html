@@ -9,7 +9,9 @@
      Allows users on iOS and Android to install the Site
      as an app-like shortcut on their home screen
 ══════════════════════════════════ -->
-<meta name="theme-color" content="#1A6BAB">
+<meta name="theme-color" content="#D97706" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100c" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="FRH">
@@ -73,21 +75,50 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --sun: #F5A623;
-    --sky: #1A6BAB;
-    --earth: #2D4A1E;
-    --warm: #F7F3ED;
+    /* Warm sunflower palette — golden sun + amber "sky" accent */
+    --sun: #F5A623;   /* bright golden yellow */
+    --sky: #D97706;   /* primary interactive amber-orange (replaces old blue) */
+    --sky-deep: #B45309; /* deeper orange for hovers/gradients */
+    --earth: #7A3B0E;
+    --warm: #F7F1E6;
     --cream: #FEFCF8;
     --dark: #1C1C1E;
     --mid: #4A4A52;
     --soft: #8A8A92;
-    --border: #E5DDD4;
+    --border: #E9DFCF;
     --card: #FFFFFF;
     --red: #C0392B;
     --green: #27AE60;
     --teal: #16A085;
     --purple: #8E44AD;
     --orange: #E67E22;
+    color-scheme: light;
+  }
+
+  /* ── DARK MODE ──
+     Follows the visitor's system preference automatically, and can be
+     forced on/off with the theme toggle (html[data-theme]). */
+  :root[data-theme="dark"] {
+    --warm: #17140E;
+    --cream: #12100B;
+    --card: #221E17;
+    --dark: #F4EFE4;
+    --mid: #C9C1B2;
+    --soft: #968D7D;
+    --border: #383126;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --warm: #17140E;
+      --cream: #12100B;
+      --card: #221E17;
+      --dark: #F4EFE4;
+      --mid: #C9C1B2;
+      --soft: #968D7D;
+      --border: #383126;
+      color-scheme: dark;
+    }
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -102,7 +133,7 @@
 
   /* ── HEADER ── */
   header {
-    background: var(--sky);
+    background: linear-gradient(135deg, var(--sun) 0%, var(--sky) 55%, var(--sky-deep) 100%);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -240,7 +271,7 @@
   }
   /* CREATE ACCOUNT — white filled, stands out */
   .btn-create {
-    background: #fff;
+    background: var(--card);
     color: var(--sky);
     border: 2px solid #fff;
   }
@@ -293,7 +324,16 @@
 
   /* ── HERO ── */
   .hero {
-    background: linear-gradient(180deg, #0a1f3d 0%, #0D3B6E 30%, #1A6BAB 70%, #1A8C6E 100%);
+    /* Dusk over Fresno: dark night sky up top (moon, stars, shooting star)
+       melting down into a warm golden sunset behind the skyline */
+    background: linear-gradient(180deg,
+      #050B1F 0%,
+      #0B1E3F 20%,
+      #26305C 38%,
+      #7A3B1E 58%,
+      #C2620E 74%,
+      #E8890F 88%,
+      #F5B942 100%);
     padding: 72px 20px 0;
     text-align: center;
     position: relative;
@@ -320,7 +360,7 @@
   }
   .hero-orb-2 {
     width: 250px; height: 250px;
-    background: radial-gradient(circle, rgba(26,140,110,.3), transparent);
+    background: radial-gradient(circle, rgba(245,166,35,.3), transparent);
     top: 20px; right: -40px;
     animation-delay: -3s;
   }
@@ -558,7 +598,7 @@
     border-color: var(--sky);
     color: #fff;
     font-weight: 600;
-    box-shadow: 0 4px 16px rgba(26,107,171,.35);
+    box-shadow: 0 4px 16px rgba(217,119,6,.35);
     animation: catPop .2s ease;
   }
   .cat-btn .cat-icon { font-size: 15px; line-height: 1; flex-shrink: 0; }
@@ -620,7 +660,7 @@
     padding: 0 14px;
     border-radius: 999px;
     border: 2px solid #FDE68A;
-    background: #fff;
+    background: var(--card);
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 13px;
@@ -680,7 +720,7 @@
   .resource-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 36px rgba(0,0,0,.12);
-    border-color: rgba(26,107,171,.3);
+    border-color: rgba(217,119,6,.3);
   }
 
   /* Card photo banner */
@@ -930,7 +970,7 @@
     transition: all .15s;
     color: var(--soft);
   }
-  .tab-btn.active { background: #fff; color: var(--sky); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .tab-btn.active { background: var(--card); color: var(--sky); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
 
   .form-group { margin-bottom: 16px; }
   .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--mid); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .5px; }
@@ -941,7 +981,7 @@
     border-radius: 10px;
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
-    background: #fff;
+    background: var(--card);
     color: var(--dark);
     outline: none;
     transition: border-color .15s;
@@ -975,7 +1015,7 @@
     top: 3px; left: 3px;
     width: 18px; height: 18px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--card);
     box-shadow: 0 1px 4px rgba(0,0,0,.2);
     transition: left .2s;
   }
@@ -1031,7 +1071,7 @@
   .saved-section h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--mid); text-transform: uppercase; letter-spacing: .5px; margin: 20px 0 10px; }
   .saved-item {
     padding: 12px;
-    background: #fff;
+    background: var(--card);
     border-radius: 10px;
     border: 1px solid var(--border);
     margin-bottom: 8px;
@@ -1485,7 +1525,7 @@
     font-weight: 800;
     font-size: 13px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 12px rgba(26,107,171,.35);
+    box-shadow: 0 4px 12px rgba(217,119,6,.35);
   }
   .how-step-icon { font-size: 36px; margin-bottom: 14px; display: block; }
   .how-step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: var(--dark); margin-bottom: 8px; }
@@ -1687,7 +1727,7 @@
 
   /* Newsletter strip */
   .newsletter-strip {
-    background: linear-gradient(135deg, rgba(245,166,35,.12), rgba(26,107,171,.12));
+    background: linear-gradient(135deg, rgba(245,166,35,.12), rgba(217,119,6,.12));
     border-top: 1px solid rgba(255,255,255,.06);
     border-bottom: 1px solid rgba(255,255,255,.06);
     padding: 28px 20px;
@@ -1763,7 +1803,7 @@
 
   /* ── CATEGORY BUTTON ACTIVE GLOW ── */
   .cat-btn.active {
-    box-shadow: 0 4px 16px rgba(26,107,171,.35);
+    box-shadow: 0 4px 16px rgba(217,119,6,.35);
     animation: catPop .2s ease;
   }
   @keyframes catPop {
@@ -2096,7 +2136,7 @@
     background:
       radial-gradient(ellipse at 20% 50%, rgba(245,166,35,.12) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 20%, rgba(26,140,110,.14) 0%, transparent 50%),
-      radial-gradient(ellipse at 60% 80%, rgba(26,107,171,.12) 0%, transparent 40%);
+      radial-gradient(ellipse at 60% 80%, rgba(217,119,6,.12) 0%, transparent 40%);
     animation: meshShift 12s ease-in-out infinite alternate;
   }
   @keyframes meshShift {
@@ -2156,7 +2196,7 @@
   .how-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
   .how-step { background: var(--card); border-radius: 20px; padding: 36px 24px 28px; border: 1.5px solid var(--border); text-align: center; position: relative; transition: transform .2s, box-shadow .2s; }
   .how-step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.09); }
-  .how-step-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 28px; height: 28px; background: var(--sky); color: #fff; border-radius: 50%; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(26,107,171,.35); }
+  .how-step-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 28px; height: 28px; background: var(--sky); color: #fff; border-radius: 50%; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(217,119,6,.35); }
   .how-step-icon { font-size: 40px; margin-bottom: 14px; display: block; }
   .how-step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--dark); margin-bottom: 8px; }
   .how-step-desc { font-size: 13px; color: var(--mid); line-height: 1.65; }
@@ -2165,7 +2205,7 @@
      FOOTER (new)
   ══════════════════════════════════ */
   .site-footer { background: linear-gradient(180deg, #0D1B2A 0%, #0a1520 100%); }
-  .newsletter-strip { background: linear-gradient(135deg, rgba(245,166,35,.1), rgba(26,107,171,.1)); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); padding: 32px 20px; }
+  .newsletter-strip { background: linear-gradient(135deg, rgba(245,166,35,.1), rgba(217,119,6,.1)); border-top: 1px solid rgba(255,255,255,.05); border-bottom: 1px solid rgba(255,255,255,.05); padding: 32px 20px; }
   .newsletter-strip-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
   .newsletter-strip-text h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: #fff; margin-bottom: 4px; }
   .newsletter-strip-text p { font-size: 13px; color: rgba(255,255,255,.5); }
@@ -2330,7 +2370,7 @@
     padding: 0 14px;
     border-radius: 999px;
     border: 2px solid #FDE68A;
-    background: #fff;
+    background: var(--card);
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 13px;
@@ -2705,7 +2745,7 @@
     align-items: center;
   }
   .donate-qr-wrap {
-    background: #fff;
+    background: var(--card);
     border-radius: 12px;
     padding: 8px;
     flex-shrink: 0;
@@ -3172,7 +3212,7 @@
     font-weight: 700;
     font-size: 13px;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(26,107,171,.4);
+    box-shadow: 0 6px 20px rgba(217,119,6,.4);
     display: flex;
     align-items: center;
     gap: 6px;
@@ -3182,10 +3222,10 @@
   }
   .install-prompt-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(26,107,171,.5);
+    box-shadow: 0 8px 28px rgba(217,119,6,.5);
   }
   @keyframes installPulse {
-    0%, 100% { box-shadow: 0 6px 20px rgba(26,107,171,.4); }
+    0%, 100% { box-shadow: 0 6px 20px rgba(217,119,6,.4); }
     50%      { box-shadow: 0 6px 28px rgba(245,166,35,.5); }
   }
   /* Hide install button when running as installed PWA */
@@ -3244,7 +3284,7 @@
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(26,107,171,.4);
+    box-shadow: 0 4px 20px rgba(217,119,6,.4);
     opacity: 0;
     pointer-events: none;
     transform: translateY(12px);
@@ -3258,7 +3298,7 @@
   .scroll-top-btn:hover {
     background: #135a92;
     transform: translateY(-2px);
-    box-shadow: 0 6px 24px rgba(26,107,171,.5);
+    box-shadow: 0 6px 24px rgba(217,119,6,.5);
   }
   .scroll-top-btn:active { transform: scale(.93); }
 
@@ -3381,7 +3421,7 @@
     width: 20px;
     height: 2px;
     border-radius: 2px;
-    background: #fff;
+    background: var(--card);
     transition: transform .3s ease, opacity .2s ease;
   }
   body.drawer-open .menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -6550,7 +6590,7 @@ function showEmailConfirmModal(name, email) {
     animation:fadeIn .25s ease;
   `;
   modal.innerHTML = `
-    <div style="background:#fff;border-radius:20px;max-width:420px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .3s ease;">
+    <div style="background:var(--card);border-radius:20px;max-width:420px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:slideUp .3s ease;">
       <!-- Header gradient -->
       <div style="background:linear-gradient(135deg,#1A6BAB,#1A8C6E);padding:28px 28px 20px;text-align:center;">
         <div style="font-size:48px;margin-bottom:8px;">📬</div>
@@ -6667,7 +6707,7 @@ function processAlertQueue() {
   const banner = document.createElement('div');
   banner.style.cssText = `
     position:fixed;top:76px;right:16px;z-index:250;
-    background:#fff;border-radius:14px;
+    background:var(--card);border-radius:14px;
     box-shadow:0 8px 32px rgba(0,0,0,.18);
     border:1.5px solid #E5DDD4;
     max-width:340px;width:100%;
